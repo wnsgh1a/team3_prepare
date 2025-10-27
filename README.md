@@ -1,73 +1,47 @@
-# React + TypeScript + Vite
+이 프로젝트는 React.js(프론트엔드)와 FastAPI(백엔드)로 구성되어 있습니다.
+원활한 실행을 위해서는 **두 개의 터미널**을 사용하여 각각 서버를 실행해야 합니다.
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## 1. 프론트엔드 실행 (React)
 
-Currently, two official plugins are available:
+React 개발 서버를 실행하여 사용자 인터페이스(UI)를 켭니다.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+1.  프로젝트 폴더(`TEAM3`)에서 터미널을 엽니다.
+2.  (최초 1회) 필요한 Node.js 패키지를 설치합니다.
+    ```bash
+    npm install
+    ```
+3.  React 개발 서버를 시작합니다.
+    ```bash
+    npm run dev
+    ```
+4.  서버가 `http://localhost:5173`에서 실행되는 것을 확인합니다.
 
-## React Compiler
+## 2. 백엔드 실행 (FastAPI)
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+GitHub 로그인 정보를 수신하고 처리할 FastAPI 서버를 켭니다.
 
-## Expanding the ESLint configuration
+1.  **별도의 새 터미널**을 엽니다.
+2.  동일한 프로젝트 폴더(`TEAM3`)로 이동합니다.
+3.  (권장) 파이썬 가상환경을 생성하고 활성화합니다.
+    ```bash
+    # Windows에서 가상환경 생성 및 활성화
+    python -m venv venv
+    .\venv\Scripts\Activate
+    ```
+4.  `requirements.txt` 파일에 있는 파이썬 라이브러리를 설치합니다.
+    ```bash
+    pip install -r requirements.txt
+    ```
+5.  FastAPI 서버를 시작합니다.
+    ```bash
+    uvicorn main:app --reload
+    ```
+6.  서버가 `http://localhost:8000`에서 실행되는 것을 확인합니다.
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+## 실행 확인
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
-
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
-
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+1.  프론트엔드(`localhost:5173`)와 백엔드(`localhost:8000`)가 모두 켜진 상태에서, 브라우저로 `http://localhost:5173`에 접속합니다.
+2.  GitHub 로그인 버튼을 클릭하여 로그인을 진행합니다.
+3.  로그인이 성공하면 `/success` 페이지로 리디렉션됩니다.
+4.  **브라우저의 개발자 도구(F12) 콘솔**을 열면 FastAPI 백엔드로부터 받은 `{ok: true}` 응답을 확인할 수 있습니다.
+5.  **FastAPI 서버 터미널**(2번 터미널)을 확인하면 GitHub 사용자 정보가 출력된 것을 볼 수 있습니다.
